@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Http\Resources\VehicleModelResource;
+use App\Models\VehicleModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -16,6 +16,6 @@ class Brand extends Model
 
     public function models(): HasMany
     {
-        return $this->hasMany(VehicleModelResource::class);
+        return $this->hasMany(VehicleModel::class);
     }
 }

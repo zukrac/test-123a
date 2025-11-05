@@ -4,7 +4,9 @@ namespace App\Models;
 
 use App\Http\Resources\VehicleModelResource;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
@@ -24,13 +26,24 @@ class Vehicle extends Model
     protected $table = 'vehicles';
     protected $fillable = ['name', 'brand_id', 'vehicle_model_id', 'manufactured_at', 'mileage', 'color'];
 
-    public function brand(): HasOne
+    public function brand(): BelongsTo
     {
-        return $this->hasOne(Brand::class);
+        return $this->belongsTo(Brand::class);
     }
 
-    public function model(): HasOne
+    public function model(): BelongsTo
     {
-        return $this->hasOne(VehicleModelResource::class);
+        return $this->belongsTo(VehicleModel::class);
+    }
+
+    public function scopeSearch(Builder $query, ?string $q = null, ?float $latitude = null, ?float $longitude = null, ?int $distance = null): Builder
+    {
+        if ($q) {
+            $query->where('name', 'like', '%' . $q . '%');
+        }
+
+        // TODO: Implement geosearch to use latitude, longitude and distance
+
+        return $query;
     }
 }

@@ -14,6 +14,9 @@ class CompanySearchRequest extends FormRequest
             'per_page' => 'nullable|integer',
             'offset' => 'nullable|integer',
             'limit' => 'nullable|integer',
+            'latitude' => 'nullable|numeric|between:-90,90',
+            'longitude' => 'nullable|numeric|between:-180,180',
+            'distance' => 'nullable|integer|min:1',
         ];
     }
 
